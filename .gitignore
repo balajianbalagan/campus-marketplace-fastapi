@@ -1,0 +1,8 @@
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.db
+.pytest_cache/
+uploads/
+.vscode/mcp.json

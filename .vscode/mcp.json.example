@@ -1,0 +1,9 @@
+{
+  "servers": {
+    "campus-marketplace": {
+      "type": "stdio",
+      "command": "${workspaceFolder}/in-class/campus-marketplace-mcp/.venv/Scripts/python.exe",
+      "args": ["${workspaceFolder}/in-class/campus-marketplace-mcp/server.py"]
+    }
+  }
+}
