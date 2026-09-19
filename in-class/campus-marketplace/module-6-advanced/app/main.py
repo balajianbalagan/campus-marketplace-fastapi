@@ -48,3 +48,12 @@ async def listings_feed(websocket: WebSocket):
             await websocket.receive_text()   # keep the connection open; we ignore whatever client sends
     except WebSocketDisconnect:
         manager.disconnect("listings", websocket)
+
+
+# Same one-line MCP mount as module-1-basics -- fastapi-mcp works the same way
+# regardless of how many routes/auth dependencies the app has (it skips the
+# websocket route above automatically since MCP tools are request/response, not streaming).
+from fastapi_mcp import FastApiMCP  # noqa: E402
+
+mcp = FastApiMCP(app)
+mcp.mount()

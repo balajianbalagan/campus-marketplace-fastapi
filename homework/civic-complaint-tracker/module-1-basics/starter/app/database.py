@@ -1,6 +1,6 @@
 from sqlmodel import SQLModel, Session, create_engine
 
-# This part is given -- identical pattern to Campus Marketplace's app/database.py.
+# This part is given -- identical pattern to Campus Marketplace's module-1-basics/app/database.py.
 DATABASE_URL = "sqlite:///./complaints.db"
 engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
 

@@ -1,6 +1,10 @@
 {
   "servers": {
-    "campus-marketplace": {
+    "campus-marketplace-easy": {
+      "type": "sse",
+      "url": "http://127.0.0.1:8000/mcp"
+    },
+    "campus-marketplace-explicit": {
       "type": "stdio",
       "command": "${workspaceFolder}/in-class/campus-marketplace-mcp/.venv/Scripts/python.exe",
       "args": ["${workspaceFolder}/in-class/campus-marketplace-mcp/server.py"]

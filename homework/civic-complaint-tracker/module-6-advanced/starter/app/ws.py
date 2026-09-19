@@ -4,7 +4,7 @@ from fastapi import WebSocket
 class ConnectionManager:
     """Tracks open websocket connections per 'room' so we can broadcast to all of them.
 
-    See Campus Marketplace's app/ws.py for the reference implementation -- same shape here.
+    See in-class/campus-marketplace/module-6-advanced/app/ws.py for the reference implementation -- same shape here.
     """
 
     def __init__(self) -> None:

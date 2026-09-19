@@ -7,7 +7,7 @@ from fastapi import HTTPException, Request
 class RateLimiter:
     """Class-based dependency: config on the instance, __call__ makes it usable via Depends().
 
-    See Campus Marketplace's app/rate_limit.py for the reference implementation.
+    See in-class/campus-marketplace/module-6-advanced/app/rate_limit.py for the reference implementation.
     """
 
     def __init__(self, times: int, seconds: int) -> None:

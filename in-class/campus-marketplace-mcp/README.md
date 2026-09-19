@@ -1,11 +1,14 @@
-# Campus Marketplace as an MCP Server
+# Campus Marketplace as an MCP Server (the explicit way)
 
-Turns the Campus Marketplace FastAPI app into an MCP (Model Context Protocol) server so
-VS Code Copilot Chat can search, view, and create marketplace listings using plain English.
+There are two ways to get MCP in this repo. Each `in-class/campus-marketplace/module-*`
+app has the **easy** way already built in (`FastApiMCP(app).mount()`, two lines, reads the
+app's existing routes automatically). This folder is the **explicit** way: one Python
+function per tool, so you can see exactly what an MCP tool call actually does.
 
 `server.py` is a thin adapter: each MCP "tool" just makes an HTTP call to the FastAPI app
 running locally on `http://127.0.0.1:8000`. FastAPI still owns validation, auth, and the
-database — MCP is just a new front door.
+database — MCP is just a new front door. It's written against the full-featured
+`module-6-advanced` app (so the `login` tool has something to log into).
 
 ## 1. Install
 
@@ -25,7 +28,7 @@ pip install -r requirements.txt
 MCP tools call the REST API, so the API has to already be running:
 
 ```bash
-cd ../campus-marketplace
+cd ../campus-marketplace/module-6-advanced
 uvicorn app.main:app --reload
 ```
 

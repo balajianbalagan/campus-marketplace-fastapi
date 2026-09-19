@@ -17,7 +17,8 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
 
-# TODO(module-5): hash a plaintext password with pwd_context. See Campus Marketplace's app/auth.py.
+# TODO(module-5): hash a plaintext password with pwd_context. See Campus Marketplace's
+# in-class/campus-marketplace/module-5-auth/app/auth.py.
 def hash_password(plain: str) -> str:
     raise NotImplementedError("TODO: implement hash_password")
 
@@ -44,7 +45,7 @@ def get_current_user(
 
 # TODO(module-5): dependency FACTORY. require_role(Role.staff, Role.admin) should return a
 # dependency that 403s (via HTTPException) unless the current user's role is in `allowed`,
-# and otherwise returns that user. Look at Campus Marketplace's require_role for the shape.
+# and otherwise returns that user. Look at require_role in the same file mentioned above.
 def require_role(*allowed: Role):
     def checker(user: User = Depends(get_current_user)) -> User:
         raise NotImplementedError("TODO: implement require_role's inner checker")

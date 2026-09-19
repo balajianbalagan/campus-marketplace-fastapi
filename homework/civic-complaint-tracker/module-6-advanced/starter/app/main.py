@@ -26,7 +26,8 @@ def root():
 
 # TODO(module-6): connect to the "complaints" room via manager.connect, then loop
 # `await websocket.receive_text()` to keep the connection open, catching WebSocketDisconnect
-# to call manager.disconnect. See Campus Marketplace's /ws/listings route for the pattern.
+# to call manager.disconnect. See the /ws/listings route in
+# in-class/campus-marketplace/module-6-advanced/app/main.py for the pattern.
 @app.websocket("/ws/complaints")
 async def complaints_feed(websocket: WebSocket):
     raise NotImplementedError("TODO: implement complaints_feed")
