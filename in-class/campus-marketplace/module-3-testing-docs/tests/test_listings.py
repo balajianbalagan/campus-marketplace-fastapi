@@ -1,13 +1,12 @@
 from fastapi.testclient import TestClient
 
-from app.main import app, listings
+from app.main import app
 
 
-def test_create_and_read_listing():
-    listings.clear()
+def test_create_then_read_listing():
     client = TestClient(app)
     created = client.post("/listings", json={
-        "title": "Used Calculus Textbook", "price_cents": 150000, "seller_name": "Priya"
+        "title": "Desk lamp", "description": "Works well", "price_cents": 80000, "seller_name": "Asha"
     })
     assert created.status_code == 201
     assert client.get(f"/listings/{created.json()['id']}").status_code == 200

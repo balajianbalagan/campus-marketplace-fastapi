@@ -1,46 +1,34 @@
-from fastapi import Depends, FastAPI, HTTPException
-from sqlmodel import Session, select
+from fastapi import FastAPI, HTTPException, status
 
-from app.database import get_session, init_db
-from app.models import Listing
+from app.models import Listing, ListingCreate
 
-app = FastAPI(title="Campus Marketplace")
-init_db()  # make sure the campus_marketplace.db file + table exist before we get any requests
+app = FastAPI(title="Campus Marketplace - Module 1")
+listings: list[Listing] = []
+next_listing_id = 1
 
 
 @app.get("/")
 def root():
-    return {"message": "Campus Marketplace API -- see /docs"}
+    return {"message": "Campus Marketplace - see /docs"}
 
 
-# GET /listings -- show everything for sale
-@app.get("/listings")
-def list_listings(session: Session = Depends(get_session)):
-    return session.exec(select(Listing)).all()
+@app.get("/listings", response_model=list[Listing])
+def list_listings():
+    return listings
 
 
-# GET /listings/{id} -- show one item
-@app.get("/listings/{listing_id}")
-def get_listing(listing_id: int, session: Session = Depends(get_session)):
-    listing = session.get(Listing, listing_id)
-    if not listing:
-        raise HTTPException(status_code=404, detail="Listing not found")
+@app.get("/listings/{listing_id}", response_model=Listing)
+def get_listing(listing_id: int):
+    for listing in listings:
+        if listing.id == listing_id:
+            return listing
+    raise HTTPException(status_code=404, detail="Listing not found")
+
+
+@app.post("/listings", response_model=Listing, status_code=status.HTTP_201_CREATED)
+def create_listing(listing_in: ListingCreate):
+    global next_listing_id
+    listing = Listing(id=next_listing_id, **listing_in.model_dump())
+    next_listing_id += 1
+    listings.append(listing)
     return listing
-
-
-# POST /listings -- add a new item for sale
-@app.post("/listings")
-def create_listing(listing: Listing, session: Session = Depends(get_session)):
-    session.add(listing)
-    session.commit()
-    session.refresh(listing)  # pulls back the id SQLite just assigned
-    return listing
-
-
-# --- Turn this API into an MCP server, so VS Code Copilot Chat can call it as tools. ---
-# No extra code needed per endpoint -- fastapi-mcp reads the routes above and builds the
-# tools automatically. See ../README.md for how to connect this to VS Code.
-from fastapi_mcp import FastApiMCP  # noqa: E402  (imported down here so the app is fully defined first)
-
-mcp = FastApiMCP(app)
-mcp.mount()

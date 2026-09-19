@@ -1,9 +1,23 @@
-# Campus Marketplace
+# Campus Marketplace reference project
 
-Same app, three stages — each folder is a complete, independently runnable version:
+This folder contains the same Campus Marketplace domain split into teaching stages. It has no accounts, passwords, roles, WebSockets, or rate limiting.
 
-1. **`module-1-basics/`** — the core: one data model, three endpoints, no login. Start here.
-2. **`module-5-auth/`** — adds user accounts, login, and roles.
-3. **`module-6-advanced/`** — adds live websocket notifications and rate limiting.
+## What students build
 
-Each folder has its own `README.md`, `requirements.txt`, and `tests/`.
+- `module-1-basics/` uses in-memory listings for the first FastAPI routes.
+- `module-2-database-crud/` adds SQLite, SQLModel, filters, and CRUD.
+- `module-3-testing-docs/` focuses on Swagger and pytest.
+- `module-5-ui/` adds a Streamlit client.
+- `module-6-mcp/` mounts the existing routes as MCP tools.
+
+## Start it
+
+```powershell
+cd module-2-database-crud
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+uvicorn app.main:app --reload
+```
+
+Each module README gives its own run command.

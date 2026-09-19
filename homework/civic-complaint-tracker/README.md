@@ -1,45 +1,39 @@
 # Homework: Civic Complaint Tracker
 
-Same shape as Campus Marketplace, different domain: **residents report civic issues
-(potholes, broken streetlights, garbage pickup, graffiti...) and city staff manage them.**
+Build one complete, SQLite-backed FastAPI project over the course. This replaces short in-class exercises and the previous module-by-module homework series.
 
-You build this **on your own**, one module folder at a time, following the same build order
-as Campus Marketplace (`in-class/campus-marketplace/`). Don't copy Campus Marketplace's code
-wholesale — port the *patterns* (four-model shape, `Depends`-based auth, dependency factories
-for RBAC) to this domain. That's the actual exercise.
+## Required outcome
 
-| Folder | Maps to |
+Your application lets residents create and browse civic complaints. It must include:
+
+- a SQLite database connected through SQLModel;
+- `GET /complaints`, `GET /complaints/{complaint_id}`, `POST /complaints`, `PUT /complaints/{complaint_id}`, and `DELETE /complaints/{complaint_id}`;
+- optional `category` and `status` filters on the list route;
+- request validation and a 404 response for a missing complaint;
+- a small Streamlit UI that creates and lists complaints through the API;
+- pytest tests for create, read, update, delete, filters, and the missing-record case; and
+- an MCP mount plus a `.vscode/mcp.json` configuration so Copilot can browse and create complaints.
+
+Do not add user accounts, JWTs, roles, WebSockets, rate limiting, uploads, or deployment work.
+
+## Suggested milestones
+
+| When | Deliverable |
 |---|---|
-| `module-1-basics/` | Module 1 — FastAPI Basics |
-| `module-5-auth/` | Module 5 — Blog API with Authentication |
-| `module-6-advanced/` | Module 6 — Advanced Patterns |
+| After Module 1 | `GET /complaints` and `POST /complaints` work in `/docs` |
+| After Modules 2-3 | SQLite, all CRUD routes, and passing tests |
+| After Module 5 | Streamlit UI calls the API |
+| After Module 6 | Copilot can use the MCP endpoint |
 
-## How to work each module
+Start from `starter/`. The starter intentionally leaves route bodies for you to implement.
 
-1. Read that module's `README.md` for the spec (endpoints, models, rules).
-2. Open `starter/app/` — it has working scaffolding plus `# TODO` markers for exactly the
-   parts that module is teaching. Everything not marked TODO already works; don't rewrite it.
-3. Run the tests. They fail on purpose until your TODOs are done, and the failure messages
-   tell you what's missing — same "run it, get told what's missing" loop as the platform.
-
-```bash
-cd module-1-basics/starter
-python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
+```powershell
+cd homework/civic-complaint-tracker/starter
+python -m venv .venv
+.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
+uvicorn app.main:app --reload
 python -m pytest ../tests -v
 ```
 
-Use `python -m pytest`, not bare `pytest` — the `-m` form adds the current directory (where `app/` lives) to Python's import path, which bare `pytest` doesn't always do, and you'll get `ModuleNotFoundError: No module named 'app'` otherwise.
-
-4. When all tests pass, run the server yourself and poke at `/docs` for five minutes before
-   moving to the next module — reading green test output isn't the same as seeing it work.
-
-## Grading rubric (self-check before submitting)
-
-- [ ] All tests in that module's `tests/` folder pass.
-- [ ] You did not delete/skip a test to make it pass.
-- [ ] Every endpoint has a `response_model` (no leaking internal fields).
-- [ ] Every DB-backed endpoint uses the `get_session` dependency, not a global connection.
-- [ ] Errors use the right status code (400 bad input, 401 not authenticated, 403 not
-      authorized, 404 not found, 422 automatic validation failure — you shouldn't be raising
-      422 by hand).
+Use FastAPI Interactive for quick experiments. Complete and demonstrate the final UI and Copilot MCP flow locally.
